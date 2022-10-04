@@ -7,6 +7,7 @@ Version: 0.1a
 
 import arcade
 from Scripts.splash_screen import SplashView
+from Scripts.main_menu import MainMenuView
 
 SCREEN_WIDTH = 1200
 SCREEN_HEIGHT = 720
@@ -41,7 +42,10 @@ class MainWindow(arcade.Window):
         for k,v in resources.items():
             arcade.resources.add_resource_handle(k, v)
 
-        self.views = {}
+        self.views = {
+            'splash'  :SplashView,
+            'menu'    :MainMenuView
+        }
 
     def on_resize(self, width, height):
         super().on_resize(width, height)

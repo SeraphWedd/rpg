@@ -11,12 +11,7 @@ class SplashView(TransitionView):
         self.start_fade_in()
         self.acc_timer = 0
         self.view_time = 5 #seconds
-        arcade.set_background_color(
-            random.choice([
-                arcade.color.BLUE_GRAY,
-                arcade.color.DARK_CYAN,
-                arcade.color.DARK_BLUE_GRAY])
-        )
+        arcade.set_background_color(arcade.color.BLUE_GRAY)
         self.shadow_size = 3
         self.px, self.wd, self.py, self.ht = self.window.get_viewport()
         
@@ -54,7 +49,7 @@ class SplashView(TransitionView):
         #These two should always be placed last to allow
         # drawing over all other parts of the view
         self.fade_in() #Only called on starting view
-        self.fade_out(SplashView) #Only called before closing view
+        self.fade_out(self.window.views['menu']) #Only called before closing view
 
     def setup(self):
         pass

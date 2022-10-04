@@ -6,7 +6,7 @@ Allows views to transition to and from each other
 import arcade
 
 class TransitionView(arcade.View):
-    def __init__(self, speed=3):
+    def __init__(self, speed=2):
         super().__init__()
         self.is_fade_in = False
         self.is_fade_out = False
