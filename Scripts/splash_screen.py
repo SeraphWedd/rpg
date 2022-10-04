@@ -2,12 +2,17 @@
 Splash screen
 """
 import arcade
+from Scripts.transition import TransitionView
 
-class SplashView(arcade.View):
-    def __init__(self):
-        super().__init__()
+class SplashView(TransitionView):
+    def __init__(self, speed=2):
+        super().__init__(speed)
+        self.start_fade_in()
+        self.acc_timer = 0
+        self.view_time = 5 #seconds
         arcade.set_background_color(arcade.color.BLUE_GRAY)
         self.shadow_size = 3
+        
         #arcade.load_font(":Font:BeautyMountainsPU-od7z.ttf")
         self.title = arcade.create_text_sprite(
             "SeraphGames",
@@ -37,7 +42,9 @@ class SplashView(arcade.View):
     def on_draw(self):
         arcade.start_render()
         self.shadow.draw()
-        self.title.draw()   
+        self.title.draw()
+        self.fade_in()
+        self.fade_out(SplashView)
 
     def setup(self):
         pass
@@ -48,3 +55,10 @@ class SplashView(arcade.View):
         x, y = self.shadow.position
         self.shadow.set_position(
             min(self.window.width*.5+self.shadow_size, x+500*dt), y)
+        self.fade_update(dt)
+
+        #Add point to fade out
+        if self.acc_timer < self.view_time:
+            self.acc_timer += dt
+        else:
+            self.start_fade_out()
