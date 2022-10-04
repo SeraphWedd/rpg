@@ -2,6 +2,7 @@
 Splash screen
 """
 import arcade
+import random
 from Scripts.transition import TransitionView
 
 class SplashView(TransitionView):
@@ -10,17 +11,23 @@ class SplashView(TransitionView):
         self.start_fade_in()
         self.acc_timer = 0
         self.view_time = 5 #seconds
-        arcade.set_background_color(arcade.color.BLUE_GRAY)
+        arcade.set_background_color(
+            random.choice([
+                arcade.color.BLUE_GRAY,
+                arcade.color.DARK_CYAN,
+                arcade.color.DARK_BLUE_GRAY])
+        )
         self.shadow_size = 3
+        self.px, self.wd, self.py, self.ht = self.window.get_viewport()
         
         #arcade.load_font(":Font:BeautyMountainsPU-od7z.ttf")
         self.title = arcade.create_text_sprite(
             "SeraphGames",
-            -self.window.width * 0.5,
-            self.window.height * 0.5,
+            -self.wd * 0.5,
+            self.ht * 0.5,
             arcade.color.AERO_BLUE,
             font_size=100,
-            width=self.window.width,
+            width=self.wd,
             font_name="times",
             anchor_x="center",
             anchor_y="center",
@@ -28,11 +35,11 @@ class SplashView(TransitionView):
         )
         self.shadow = arcade.create_text_sprite(
             "SeraphGames",
-            -self.window.width * 0.5+self.shadow_size,
-            self.window.height * 0.5-self.shadow_size,
+            -self.wd * 0.5+self.shadow_size,
+            self.ht * 0.5-self.shadow_size,
             arcade.color.BLACK_OLIVE,
             font_size=100,
-            width=self.window.width,
+            width=self.wd,
             font_name="times",
             anchor_x="center",
             anchor_y="center",
@@ -43,18 +50,21 @@ class SplashView(TransitionView):
         arcade.start_render()
         self.shadow.draw()
         self.title.draw()
-        self.fade_in()
-        self.fade_out(SplashView)
+
+        #These two should always be placed last to allow
+        # drawing over all other parts of the view
+        self.fade_in() #Only called on starting view
+        self.fade_out(SplashView) #Only called before closing view
 
     def setup(self):
         pass
 
     def on_update(self, dt: float):
         x, y = self.title.position
-        self.title.set_position(min(self.window.width*.5, x+500*dt), y)
+        self.title.set_position(min(self.wd*.5, x+500*dt), y)
         x, y = self.shadow.position
         self.shadow.set_position(
-            min(self.window.width*.5+self.shadow_size, x+500*dt), y)
+            min(self.wd*.5+self.shadow_size, x+500*dt), y)
         self.fade_update(dt)
 
         #Add point to fade out

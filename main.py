@@ -8,7 +8,7 @@ Version: 0.1a
 import arcade
 from Scripts.splash_screen import SplashView
 
-SCREEN_WIDTH = 1024
+SCREEN_WIDTH = 1200
 SCREEN_HEIGHT = 720
 SCREEN_TITLE = 'RPG $Testing Phase$' #Temp
 RESIZABLE = True
@@ -42,6 +42,10 @@ class MainWindow(arcade.Window):
             arcade.resources.add_resource_handle(k, v)
 
         self.views = {}
+
+    def on_resize(self, width, height):
+        super().on_resize(width, height)
+        self.set_viewport(0, SCREEN_WIDTH, 0, SCREEN_HEIGHT)
 
 
 def main():
