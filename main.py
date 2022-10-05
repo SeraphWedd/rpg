@@ -98,7 +98,6 @@ window = None
 def main():
     global window
     window = MainWindow()
-    window.save_options({})
     window.center_window()
     start_view = SplashView()
     start_view.setup()

@@ -134,7 +134,6 @@ class OptionsView(TransitionView):
 
     def on_update(self, dt: float):
         if self.window.is_pressed.get(arcade.key.ESCAPE, 0):
-            print("saving", self.options)
             self.window.save_options(self.options)
             #Avoid loop
             self.window.is_pressed[arcade.key.ESCAPE] = False
