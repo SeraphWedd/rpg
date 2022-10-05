@@ -64,7 +64,6 @@ class TransitionView(arcade.View):
         else:
             self.is_fade_out = False
 
-
     def on_key_press(self, key, modifiers):
         """ Handle key presses."""
         #If any key is pressed, skip to fade out

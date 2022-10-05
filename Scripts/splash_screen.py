@@ -42,7 +42,7 @@ class SplashView(TransitionView):
         )
 
     def on_draw(self):
-        arcade.start_render()
+        self.clear()
         self.shadow.draw()
         self.title.draw()
 
