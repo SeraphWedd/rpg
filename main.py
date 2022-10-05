@@ -4,10 +4,11 @@ RPG Game
 Author: SeraphWedd
 Version: 0.1a
 """
-
+import pickle
 import arcade
 from Scripts.splash_screen import SplashView
 from Scripts.main_menu import MainMenuView
+from Scripts.options import OptionsView
 
 SCREEN_WIDTH = 1280
 SCREEN_HEIGHT = 720
@@ -15,6 +16,13 @@ SCREEN_TITLE = 'RPG $Testing Phase$' #Temp
 RESIZABLE = False
 RETAIN_ASPECT_RATIO = True
 ASPECT_RATIO = 16/9
+
+OPTIONS_DEFAULT = {
+    'master_volume':1.0,
+    'se_volume':1.0,
+    'bgm_volume':1.0,
+    'text_speed':1.0
+}
 
 class MainWindow(arcade.Window):
     def __init__(self):
@@ -41,12 +49,17 @@ class MainWindow(arcade.Window):
             "BGM": "Resources/Sounds/BGM",
             "SE": "Resources/Sounds/SE",
         }
+        self.options = self.read_options()
+        if len(self.options) == 0:
+            self.options = OPTIONS_DEFAULT.copy()
+        
         for k,v in resources.items():
             arcade.resources.add_resource_handle(k, v)
 
         self.views = {
             'splash'  :SplashView,
-            'menu'    :MainMenuView
+            'menu'    :MainMenuView,
+            'options' :OptionsView,
         }
 
         self.is_pressed = {}
@@ -67,11 +80,25 @@ class MainWindow(arcade.Window):
 
     def on_key_release(self, key, modifier):
         self.is_pressed[key] = False
+
+    def read_options(self, fname='options.cfg'):
+        with open(fname, 'rb') as f:
+            opt = pickle.load(f)
+        return opt
+
+    def save_options(self, options, fname='options.cfg'):
+        if not options: #Filter out error on save
+            options = self.options
+            
+        f = open(fname, 'wb')
+        pickle.dump(options, f)
+        f.close()
         
 window = None
 def main():
     global window
     window = MainWindow()
+    window.save_options({})
     window.center_window()
     start_view = SplashView()
     start_view.setup()
