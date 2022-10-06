@@ -171,7 +171,7 @@ class OptionsView(TransitionView):
             
         self.manager.add(
             ag.UIAnchorWidget(
-                hild=bg_slider,
+                child=bg_slider,
                 align_x=100,
                 align_y=-20
             )
