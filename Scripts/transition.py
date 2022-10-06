@@ -13,6 +13,12 @@ class TransitionView(arcade.View):
         self.fade_val = 255
         self.fade_rate = 255 / speed
         self.status = 'fade_in'
+        
+    def setup(self):
+        pass
+
+    def on_update(self, dt):
+        self.fade_update(dt)
 
     def fade_update(self, dt):
         if self.status == 'fade_in':

@@ -9,6 +9,7 @@ import arcade
 from Scripts.splash_screen import SplashView
 from Scripts.main_menu import MainMenuView
 from Scripts.options import OptionsView
+from Scripts.continue_view import ContinueView
 
 SCREEN_WIDTH = 1280
 SCREEN_HEIGHT = 720
@@ -60,6 +61,7 @@ class MainWindow(arcade.Window):
             'splash'  :SplashView,
             'menu'    :MainMenuView,
             'options' :OptionsView,
+            'continue':ContinueView,
         }
 
         self.is_pressed = {}

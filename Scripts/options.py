@@ -16,6 +16,32 @@ class OptionsView(TransitionView):
         self.manager.enable()
         self.options = self.window.read_options()
 
+        self.title = arcade.create_text_sprite(
+            "OPTIONS",
+            self.wd * 0.5,
+            self.ht * 0.75,
+            arcade.color.BLACK,
+            font_size=42,
+            width=self.wd,
+            font_name="times",
+            anchor_x="center",
+            anchor_y="center",
+            align="center",
+        )
+
+        self.banner = arcade.create_text_sprite(
+            "Press ESC to return...",
+            self.wd * 0.5,
+            self.ht * 0.15,
+            arcade.color.BLACK,
+            font_size=14,
+            width=self.wd,
+            font_name="times",
+            anchor_x="center",
+            anchor_y="center",
+            align="center",
+        )
+
         #Master Volume
         mv_slider = UISlider(value=self.options['master_volume']*100,
                              width=300, height=50)
@@ -123,7 +149,9 @@ class OptionsView(TransitionView):
 
     def on_draw(self):
         self.clear()
+        self.title.draw()
         self.manager.draw()
+        self.banner.draw()
         #These two should always be placed last to allow
         # drawing over all other parts of the view
         self.fade_in() #Only called on starting view
