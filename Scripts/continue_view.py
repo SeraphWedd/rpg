@@ -59,7 +59,7 @@ class ContinueView(TransitionView):
             align="center",
         )
 
-    def draw_sf_boxes(self, shadow=0, color=arcade.color.DARK_BLUE):
+    def draw_sf_boxes(self, shadow=0, color=arcade.color.BLACK_BEAN):
         self.sf_box_1 = arcade.draw_rectangle_filled(
             self.wd*.25+shadow,
             self.ht*.45-shadow,
@@ -84,7 +84,7 @@ class ContinueView(TransitionView):
         self.title_1.draw()
         self.title_2.draw()
         self.draw_sf_boxes(4)
-        self.draw_sf_boxes(color=arcade.color.AERO_BLUE)
+        self.draw_sf_boxes(color=arcade.color.LIGHT_BROWN)
 
         #These two should always be placed last to allow
         # drawing over all other parts of the view
