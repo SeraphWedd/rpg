@@ -1,30 +1,42 @@
 """
 Main Menu Screen
+
+Main junction of the game. Connects to all the other views of the game.
 """
+
 import arcade
 import arcade.gui as ag
+
 from Scripts.transition import TransitionView
-from random import randint
+
+
 class MainMenuView(TransitionView):
     def __init__(self, speed=1):
         super().__init__(speed)
+        #Initialize fade_in on start
         self.start_fade_in()
+        #Set the background color of the view
         arcade.set_background_color(arcade.color.GRAY_BLUE)
-
         
-    def create_buttons(self):
-        # --- Required for all code that uses UI element,
+    def setup(self):
+        '''
+        Setup for the Main Menu.
+        '''
+        #Set the target_key or the key/name of the next view to render
+        self.target_key = 'None'
+        # Required for all code that uses UI element,
         # a UIManager to handle the UI.
         self.manager = ag.UIManager()
         self.manager.enable()
-        
+        #Get the size of the current viewport
         self.px, self.wd, self.py, self.ht = self.window.get_viewport()
+        #To enable scaling, we reference the viewport size for use
         width = self.wd//4
         height = self.ht//16
         
         self.v_box = ag.UIBoxLayout()
-        self.target_key = 'None'
 
+        #The style to use for the buttons
         self.default_style = {
             "font_name": "times",
             "font_size": height//3,
@@ -33,71 +45,107 @@ class MainMenuView(TransitionView):
             "border_color": (255, 255, 255),
             "bg_color": (21, 19, 21),
 
-            # used if button is pressed
+            #used if button is pressed
             "bg_color_pressed": arcade.color.WHITE,
-            "border_color_pressed": arcade.color.YELLOW,  # also used when hovered
             "font_color_pressed": arcade.color.BLACK,
+            #used when hovered
+            "border_color_pressed": arcade.color.YELLOW,
         }
         #Buttons on the main menu would be
         #New Game, Continue, Options, Credits, Quit
-        
         #New Game
         self.new_game_btn = ag.UIFlatButton(
-            text='New Game', width=width, height=height, style=self.default_style,
+            text='New Game',
+            width=width,
+            height=height,
+            style=self.default_style,
         )
-        self.v_box.add(self.new_game_btn.with_space_around(bottom=width//20))
+        self.v_box.add(
+            self.new_game_btn.with_space_around(
+                bottom=width//20
+            )
+        )
+        #Add a new on_click event for the button        
         @self.new_game_btn.event("on_click")
         def on_click_new_game(event):
-            print("New game!")
+            print("New game!") #Debugging
             self.target_key = 'new_game'
             self.manager.disable()
             self.start_fade_out()
             
         #Continue
         self.continue_btn = ag.UIFlatButton(
-            text='Continue', width=width, height=height, style=self.default_style,
+            text='Continue',
+            width=width,
+            height=height,
+            style=self.default_style,
         )
-        self.v_box.add(self.continue_btn.with_space_around(bottom=width//20))
+        self.v_box.add(
+            self.continue_btn.with_space_around(
+                bottom=width//20
+            )
+        )
         @self.continue_btn.event("on_click")
         def on_click_continue(event):
-            print("Continue!")
+            print("Continue!") #Debugging
             self.target_key = 'continue'
             self.manager.disable()
             self.start_fade_out()
             
         #Options
         self.options_btn = ag.UIFlatButton(
-            text='Options', width=width, height=height, style=self.default_style,
+            text='Options',
+            width=width,
+            height=height,
+            style=self.default_style,
         )
-        self.v_box.add(self.options_btn.with_space_around(bottom=width//20))
+        self.v_box.add(
+            self.options_btn.with_space_around(
+                bottom=width//20
+            )
+        )
         @self.options_btn.event("on_click")
         def on_click_options(event):
-            print("Options.")
+            print("Options.") #Debugging
             self.target_key = 'options'
             self.manager.disable()
             self.start_fade_out()
             
         #Credits
         self.credits_btn = ag.UIFlatButton(
-            text='Credits', width=width, height=height, style=self.default_style,
+            text='Credits',
+            width=width,
+            height=height,
+            style=self.default_style,
         )
-        self.v_box.add(self.credits_btn.with_space_around(bottom=width//20))
+        self.v_box.add(
+            self.credits_btn.with_space_around(
+                bottom=width//20
+            )
+        )
         @self.credits_btn.event("on_click")
         def on_click_credits(event):
-            print("Credits.")
-            #self.target_key = 'credits'
+            print("Credits.") #Debugging
+            #self.target_key = 'credits' #Use for proper credits
             self.target_key = 'splash'
             self.manager.disable()
             self.start_fade_out()
             
         #Quit
         self.quit_btn = ag.UIFlatButton(
-            text='Quit', width=width, height=height, style=self.default_style,
+            text='Quit',
+            width=width,
+            height=height,
+            style=self.default_style,
         )
-        self.v_box.add(self.quit_btn.with_space_around(bottom=width//20))
+        self.v_box.add(
+            self.quit_btn.with_space_around(
+                bottom=width//20
+            )
+        )
         @self.quit_btn.event("on_click")
         def on_click_quit(event):
-            print("Quitting game.")
+            print("Quitting game.") #Debugging
             self.window.close()
             arcade.exit()
 
@@ -120,15 +168,10 @@ class MainMenuView(TransitionView):
             self.window.views.get(self.target_key, MainMenuView)
         ) #Only called before closing view
 
-    def setup(self):
-        self.create_buttons()
-
-    def on_update(self, dt: float):
-        self.fade_update(dt)
-
-    def on_hide_view(self):
-        self.manager.disable()
-
     def on_key_press(self, key, modifiers):
-        """ Handle key presses."""
+        '''
+        Handle key presses.
+        '''
+        #Override keypress event on parent class
+        #to stop fade_out on key press
         pass
