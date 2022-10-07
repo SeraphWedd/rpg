@@ -3,7 +3,7 @@ Main Menu Screen
 
 Main junction of the game. Connects to all the other views of the game.
 """
-
+import mouse
 import arcade
 import arcade.gui as ag
 
@@ -156,6 +156,13 @@ class MainMenuView(TransitionView):
                 anchor_y="center_y",
                 child=self.v_box)
         )
+        self.current_button = 0
+        self.button_positions = []
+        px, _ = self.v_box.center
+        py = self.ht*.77
+        for b in self.v_box.children:
+            dx, dy = b.rect.center
+            self.button_positions.append((px+dx, py+dy))
         
     def on_draw(self):
         self.clear()
@@ -172,6 +179,26 @@ class MainMenuView(TransitionView):
         '''
         Handle key presses.
         '''
-        #Override keypress event on parent class
-        #to stop fade_out on key press
-        pass
+        if key in (arcade.key.DOWN,arcade.key.RIGHT,arcade.key.S,arcade.key.D):
+            self.current_button += 1
+            self.current_button %= len(self.button_positions)
+            px, py = self.button_positions[self.current_button]
+            self.window.set_mouse_position(int(px), int(py))
+            
+        elif key in (arcade.key.UP,arcade.key.LEFT,arcade.key.W,arcade.key.A):
+            self.current_button -= 1
+            self.current_button %= len(self.button_positions)
+            px, py = self.button_positions[self.current_button]
+            self.window.set_mouse_position(int(px), int(py))
+
+        elif key in (arcade.key.SPACE, arcade.key.ENTER):
+            mouse.click('left') #Simulate a click
+        
+        
+    def on_mouse_motion(self, x, y, dx, dy):
+        #Look for the closest from the buttons
+        #and set is at the target
+        distances = [
+            (px-x)**2+(py-y)**2 for px, py in self.button_positions
+        ]
+        self.current_button = distances.index(min(distances))
