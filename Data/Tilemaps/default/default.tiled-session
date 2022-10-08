@@ -1,0 +1,43 @@
+{
+    "Map/SizeTest": {
+        "height": 4300,
+        "width": 2
+    },
+    "activeFile": "default.json",
+    "expandedProjectPaths": [
+    ],
+    "fileStates": {
+        "default.json": {
+            "scale": 0.125,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 2000,
+                "y": 1376
+            }
+        },
+        "default.tsx": {
+            "scaleInDock": 0.33,
+            "scaleInEditor": 1
+        }
+    },
+    "last.imagePath": "C:/Users/Family/Documents/GitHub/RPG/rpg/Resources/Images/Maps",
+    "map.height": 40,
+    "map.lastUsedFormat": "json",
+    "map.tileHeight": 64,
+    "map.tileWidth": 64,
+    "map.width": 50,
+    "openFiles": [
+        "default.json",
+        "default.tsx"
+    ],
+    "project": "default.tiled-project",
+    "recentFiles": [
+        "default.tsx",
+        "default.json"
+    ],
+    "tileset.lastUsedFormat": "tsx",
+    "tileset.tileSize": {
+        "height": 64,
+        "width": 64
+    }
+}
