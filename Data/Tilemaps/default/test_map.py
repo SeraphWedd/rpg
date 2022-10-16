@@ -3,7 +3,7 @@ import arcade
 class MainWindow(arcade.Window):
     def __init__(self):
         super().__init__()
-        self.tm = arcade.load_tilemap('default.json')
+        self.tm = arcade.load_tilemap('default.json', scaling=0.5)
         arcade.set_background_color(arcade.color.BLACK)
         self.camera = arcade.Camera()
         self.pos_x, self.pos_y = 0, 0
